@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><foreach name='look' item='v'>{$v.name}</foreach>的个人资料 | 最懒进化-陈远琪 PHP海绵—www.chenyuanqi.com + Power by cyq</title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <link rel="shortcut icon" href="http://www.chenyuanqi.com/Template/Default/Style/Images/icon.ico" />
+    <meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0,  maximum-scale=1.0" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/public.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/font-awesome.min.css"/>
+    <link rel='stylesheet' href='__PUBLIC__/css/bootstrap.css' type='text/css' media='all' />
+    <script type='text/javascript' src='__PUBLIC__/js/jquery-2.1.1.min.js'></script>
+    <script type='text/javascript' src='__PUBLIC__/js/bootstrap.js'></script>
+</head>
+<body>
+    <div class="container">
+            <include file='Common:header'/>
+        <div class="vip-main cgx-txt">
+        <foreach name='look' item='v'>
+        <h1 class="center-h1"><i class="fa fa-user"></i>{$v.name}的个人资料</h1>
+                <div class="vip-content">
+                    <div class="vip-txt-box">
+                    <table>
+                        <tr>
+                            <td class="vip-title">姓名：</td>
+                            <td class="vip-input">{$v.name}</td>
+                        </tr>
+                        <tr>
+                            <td class="vip-title">姓别：</td>
+                            <td class="vip-input"><?php if ($v['sex'] == '0'){ echo '男';}else{echo '女';} ?> </td>
+                        </tr>
+                        <tr>
+                            <td class="vip-title">电话：</td>
+                            <td class="vip-input"><a href="tel:{$v.tel}">{$v.tel}</a></td>
+                        </tr>
+                        <tr>
+                            <td class="vip-title">邮箱：</td>
+                            <td class="vip-input"><a href="mailto:{$v.email}">{$v.email}</a></td>
+                        </tr>
+                        <tr>
+                            <td class="vip-title">部门：</td>
+                            <td class="vip-input">
+                                <?php if ($v['dep'] == '1') echo '市场一部'; ?>
+                                <?php if ($v['dep'] == '2') echo '市场二部'; ?>
+                                <?php if ($v['dep'] == '3') echo '技术部'; ?>
+                                <?php if ($v['dep'] == '4') echo '行政部'; ?>
+                            </td>
+                        </tr>
+                    </table>
+
+                    </div>
+                    <div class="vip-img-box">
+                        <span class="vip-img">
+                            <img src="__ROOT__{$v.img}" alt="">
+                        </span>
+                    </div>
+
+                <div class="vip-text">
+                    <table>
+                        <tr>
+                            <td class="vip-title">签名：</td>
+                            <td class="vip-input">{$v.content}</td>
+                        </tr>
+                </foreach>
+                    </table>
+                </div>
+                </div>
+        </div>
+    </div>
+    <script src="__PUBLIC__/js/index.js"></script>
+</body>
+</html>

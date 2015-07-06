@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0,  maximum-scale=1.0" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <title><foreach name='lookblog' item='v'>{$v.title}</foreach></title>
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/public.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/font-awesome.min.css"/>
+    <link rel='stylesheet' href='__PUBLIC__/css/bootstrap.css' type='text/css' media='all' />
+    <script type='text/javascript' src='__PUBLIC__/js/jquery-2.1.1.min.js'></script>
+    <script type='text/javascript' src='__PUBLIC__/js/bootstrap.js'></script>
+    <script type='text/javascript' src='__PUBLIC__/js/ajax.js'></script>
+</head>
+<body>
+    <div class="container">
+            <include file='Common:header'/>
+              <div id="info"></div>
+        <div class="look-blog cgx-txt clearfix">
+        <foreach name='lookblog' item='v'>
+            <h1 class="center-h1">
+                {$v.title}
+            </h1>
+                 <p class="look-blog-ico">
+                <span><i class="fa fa-user"></i><a href="#">{$v.author}</a></span>
+                <span class="blog-box-ico"><i class="fa fa-thumbs-up"></i>{$v.top}</span>
+                <span class="blog-box-ico"><i class="fa fa-eye"></i>{$v.visits}</span>
+                <span class="blog-box-ico"><i class="fa fa-clock-o"></i>{$v.time|date='Y-m-d H:i:s', ###}</span>
+                </p>
+            <div class="rzck-txt-box">
+                <h2>本周总结</h2>
+                <p>{$v.bzzj}</p>
+            </div>
+            <div class="rzck-txt-box">
+                <h2>下周计划</h2>
+                <p>{$v.xzjh}</p>
+            </div>
+            <div class="rzck-txt-box">
+                <h2>建议反馈</h2>
+                <p>{$v.yjfk}</p>
+            </div>
+            <h5>本文分享链接：</h5><p style="color:red;"><a href="http://notes.chenyuanqi.com/index.php/Show/index/id/{$Think.get.id}">http://notes.chenyuanqi.com/index.php/Show/index/id/{$Think.get.id}</a></p>
+            <form name="formtop" id="BlogTop" method="post" action="">
+            <input type="hidden" name="Topbid" value="{$v.id}"/>
+            <input type="hidden" name="Topuid" value="<?php echo session('id'); ?>"/>
+            <if condition="$deltop neq ''">
+                <a class="ding alrtop deltop">
+                <i class="fa fa-thumbs-up"></i>取消</a>
+                <else/>
+                <a class="ding addtop">
+                <i class="fa fa-thumbs-up"></i>赞</a>
+            </if>
+            </form>
+
+            <div class="ding-box">
+                <foreach name='top' item='value'>
+                    <if condition="$key neq 6">
+                    <a href="{:U('User/look', array('id' => $value['uid']))}"><if condition="$key neq 0">、</if>{$value.name}</a></if>
+                </foreach>
+                <if condition="$v['top'] gt 5">等</if>觉得很赞，累计已经达到 {$v.top} 次。
+            </div>
+        </foreach>
+            <div class="comment-box clearfix">
+            <ul>
+            <foreach name='comment' item='v'>
+                <li class="comment">
+                    <span class="comment-user">
+                        <a href="{:U('User/look', array('id' => $v['uid']))}">
+                        <img src="{$v.img}" alt="{$v.name}" width="50px" height="50px">
+                        <p>{$v.name}</p>
+                        </a>
+                    </span>
+                    <p class="comment-content">{$v.content}
+                        <span>
+                        <if condition="session('id') eq $v['uid']">
+                        <a href="#" onclick='del({$v.id});'><i class='fa fa-trash'></i></a>
+                        </if>
+                        <i class="fa fa-clock-o"></i>{$v.time|date='Y-m-d H:i', ###}</span>
+                    </p>
+                </li>
+            </foreach>
+                    <div class="msg-page">
+                        <div class="page">{$page}</div>
+                    </div>
+            </ul>
+                    <div class="txt-srk">
+                        <textarea name="content" required></textarea>
+                        <input type="hidden" name="ComBid" value="<foreach name='lookblog' item='v'>{$v.id}</foreach>"/>
+                    </div>
+                        <input type="submit" class="rzck-btn-box" id="AddCommentBnt" id="submit-button" value="提&nbsp;&nbsp;交">
+
+            </div>
+        </div>
+    </div>
+    <script src="__PUBLIC__/js/index.js"></script>
+</body>
+</html>
+<!-- 引入弹框 --> 
+<script type='text/javascript' src='__PUBLIC__/js/fDialog/jquery.fDialog.min.js'></script>
+<script type='text/javascript' src='__PUBLIC__/js/fDialog/jquery.fLayout.min.js'></script>
+<script type='text/javascript' src='__PUBLIC__/js/fDialog/fDialog.plugin.js'></script>
+<link rel="stylesheet" href="__PUBLIC__/js/fDialog/css/fDialog.css" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/js/fDialog/css/animate.min.css" type="text/css" />
+<script type="text/javascript">
+    var AddTopUrl = "{:U('Blog/addtop')}";
+    var DelTopUrl = "{:U('Blog/deltop')}";
+    var AddCommentUrl = "{:U('Blog/addcomment')}";
+
+ function del(obj){
+    $.fDialog.alert("确定要删除吗？","question",{
+        shade : false,
+        animated : 'bounceInLeft', //入场动画效果CSS样式
+        removeAnimated : 'bounceOutRight', //退场动画效果CSS样式
+        buttons : [{text:'Yes',value:'ok',cls:'success'},{text:'No',value:'no',cls:'gray'}],
+        buttonClick : function(v){
+            if ('ok' != v) {
+                return true;
+            } else {
+                location.href = "{:U('Blog/delcomment/id/"+obj+"')}";
+            }
+        }
+    });
+}
+</script>

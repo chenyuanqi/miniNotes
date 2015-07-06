@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0,  maximum-scale=1.0" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <title>我的草稿箱</title>
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/public.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/font-awesome.min.css"/>
+    <link rel='stylesheet' href='__PUBLIC__/css/bootstrap.css' type='text/css' media='all' />
+    <script type='text/javascript' src='__PUBLIC__/js/jquery-2.1.1.min.js'></script>
+    <script type='text/javascript' src='__PUBLIC__/js/bootstrap.js'></script>
+</head>
+<body>
+    <div class="container">
+            <include file='Common:header'/>
+        <div class="cgx-txt">
+            <h1><i class="fa fa-list-ul"></i>我的草稿箱</h1>
+            <div class="cgx-sbox">
+                <ul class="cgx-txt-box clearfix">
+                <foreach name='blog' item='v' key='i'>
+                    <li>
+                        <div class="cgx-sbox-top">
+                            <h2><?php echo $i+1; ?></h2>
+                            <a href="{:U('Blog/edit', array('id' => $v['id']))}"><p class="cgx-top-p">{$v.title}</p></a>
+                            <span class="cgx-top-btn">
+                            <span class="cgx-dra-btn">
+                                <a href="#" onclick='publish({$v.id});'><i class="fa fa-check"></i> 发 布</a>
+                            </span>
+                            <span class="cgx-dra-btn dra-right">
+                                <a href="{:U('Blog/look', array('id' => $v['id']))}"><i class="fa dar-eye fa-eye"></i> 预 览</a>
+                            </span>
+                            </span>
+                        </div>
+                        <div class="cgx-sbox-bottom">
+                            <p>
+                            <span><i class="fa fa-user"></i><a href="{:U('User/look', array('id' => $v['uid']))}">{$v.author}</a></span>
+                            <span class="blog-box-ico"><a href="{:U('Blog/edit', array('id' => $v['id']))}"><i class="fa fa-pencil"></i>编辑</a></span>
+                            <span class="blog-box-ico"><a href="#" onclick='del({$v.id});'><i class="fa fa-trash"></i>删除</a></span>
+                            <span class="blog-box-ico"><i class="fa fa-clock-o"></i>{$v.time|date='Y-m-d', ###}</span>
+                            </p>
+                        </div>
+                    </li>
+                </foreach>
+                </ul>
+                    <div class="msg-page">
+                        <div class="page">{$page}</div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <script src="__PUBLIC__/js/index.js"></script>
+</body>
+</html>
+<!-- 引入弹框 --> 
+<script type='text/javascript' src='__PUBLIC__/js/fDialog/jquery.fDialog.min.js'></script>
+<script type='text/javascript' src='__PUBLIC__/js/fDialog/jquery.fLayout.min.js'></script>
+<script type='text/javascript' src='__PUBLIC__/js/fDialog/fDialog.plugin.js'></script>
+<link rel="stylesheet" href="__PUBLIC__/js/fDialog/css/fDialog.css" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/js/fDialog/css/animate.min.css" type="text/css" />
+<script type="text/javascript">
+function publish(obj){
+    $.fDialog.alert("确定要发布吗？","question",{
+        shade : false,
+        animated : 'bounceInLeft', //入场动画效果CSS样式
+        removeAnimated : 'bounceOutRight', //退场动画效果CSS样式
+        buttons : [{text:'Yes',value:'ok',cls:'success'},{text:'No',value:'no',cls:'gray'}],
+        buttonClick : function(v){
+            if ('ok' != v) {
+                return true;
+            } else {
+                location.href = "{:U('Blog/publish/id/"+obj+"')}";
+            }
+        }
+    });
+}
+
+function del(obj){
+    $.fDialog.alert("确定要删除吗？","question",{
+        shade : false,
+        animated : 'bounceInLeft', //入场动画效果CSS样式
+        removeAnimated : 'bounceOutRight', //退场动画效果CSS样式
+        buttons : [{text:'Yes',value:'ok',cls:'success'},{text:'No',value:'no',cls:'gray'}],
+        buttonClick : function(v){
+            if ('ok' != v) {
+                return true;
+            } else {
+                location.href = "{:U('Blog/del/id/"+obj+"')}";
+            }
+        }
+    });
+}
+</script>

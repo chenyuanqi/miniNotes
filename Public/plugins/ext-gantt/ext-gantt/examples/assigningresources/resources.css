@@ -1,0 +1,21 @@
+.resources-assigned .sch-gantt-label-right
+{
+    background:url(images/user.png) no-repeat left center !important;
+    padding-left:20px;
+    display:block;
+}
+
+.sch-assignment-cell
+{
+    color:#666;
+}
+
+.indent
+{
+    background:url(images/indent.png) no-repeat left center !important;
+}
+
+.outdent
+{
+    background:url(images/outdent.png) no-repeat left center !important;
+}

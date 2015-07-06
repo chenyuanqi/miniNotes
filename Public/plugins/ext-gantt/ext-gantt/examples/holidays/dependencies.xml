@@ -1,0 +1,27 @@
+<Links>
+    <Link>
+        <From>3</From>
+        <To>4</To>
+        <Type>2</Type>
+    </Link>
+    <Link>
+        <From>4</From>
+        <To>5</To>
+        <Type>2</Type>
+    </Link>
+    <Link>
+        <From>5</From>
+        <To>13</To>
+        <Type>2</Type>
+    </Link>
+    <Link>
+        <From>13</From>
+        <To>14</To>
+        <Type>2</Type>
+    </Link>
+    <Link>
+        <From>14</From>
+        <To>15</To>
+        <Type>2</Type>
+    </Link>
+</Links>

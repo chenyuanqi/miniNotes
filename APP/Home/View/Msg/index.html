@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>交流区 | 最懒进化-陈远琪 PHP海绵—www.chenyuanqi.com + Power by cyq.html</title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <link rel="shortcut icon" href="http://www.chenyuanqi.com/Template/Default/Style/Images/icon.ico" />
+    <meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0,  maximum-scale=1.0" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/public.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/font-awesome.min.css"/>
+    <link rel='stylesheet' href='__PUBLIC__/css/bootstrap.css' type='text/css' media='all' />
+    <script type='text/javascript' src='__PUBLIC__/js/jquery-2.1.1.min.js'></script>
+    <script type='text/javascript' src='__PUBLIC__/js/bootstrap.js'></script>
+    <script type='text/javascript' src='__PUBLIC__/js/ajax.js'></script>
+</head>
+<body>
+    <div class="container">
+            <include file='Common:header'/>
+                <div id="info"></div>
+        <div class="cgx-txt">
+        <h1 class="center-h1"><i class="fa fa-users"></i>交流区</h1>
+                <div class="msg-box">
+                    <ul>
+                    <foreach name='msg' item='v'>
+                        <li class="msg">
+                            <span class="msg-user" <if condition="session('id') eq $v['uid']">style="float:right;"</if>>
+                                <a href="{:U('User/look', array('id' => $v['uid']))}">
+                                <img src="__ROOT__{$v.img}" alt="{$v.name}" width="50px" height="50px">
+                                <p>{$v.name}</p>
+                                </a>
+                            </span>
+                            <p class="msg-content" <if condition="session('id') eq $v['uid']">style="float:right;"</if> >
+                                {$v.content|htmlspecialchars_decode|strip_tags}
+                                <span style="float:left;text-align:left;" >
+                                <if condition="session('id') eq $v['uid']">
+                                <a href="#" onclick='del({$v.id});'><i class='fa fa-trash'></i></a>
+                                </if>
+                                <i class="fa fa-clock-o"></i>{$v.time|date='Y-m-d H:i', ###}
+                                </span>
+                            </p>
+                        </li>
+                    </foreach>
+                    </ul>
+                    <div class="msg-page">
+                        <div class="page">{$page}</div>
+                    </div>
+                </div>
+                <div class="msg-edit">
+                        <textarea name="content"  id="editor" cols="20" wrap="hard" placeholder="这里输入您要说的话" required='required' autofocus></textarea>
+                        <input type="submit" class="msg-btn" id="AddMsgBnt" id="submit-button" value="提&nbsp;&nbsp;交">
+                </div>
+        </div>
+    </div>
+  
+    <script src="__PUBLIC__/js/index.js"></script>
+</body>
+</html>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/js/simditor/styles/simditor.css" />
+<script type="text/javascript" src="__PUBLIC__/js/simditor/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/simditor/scripts/module.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/simditor/scripts/hotkeys.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/simditor/scripts/uploader.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/simditor/scripts/simditor.js"></script>
+<!-- 引入弹框 --> 
+<script type='text/javascript' src='__PUBLIC__/js/fDialog/jquery.fDialog.min.js'></script>
+<script type='text/javascript' src='__PUBLIC__/js/fDialog/jquery.fLayout.min.js'></script>
+<script type='text/javascript' src='__PUBLIC__/js/fDialog/fDialog.plugin.js'></script>
+<link rel="stylesheet" href="__PUBLIC__/js/fDialog/css/fDialog.css" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/js/fDialog/css/animate.min.css" type="text/css" />
+<script type='text/javascript'>
+var editor = new Simditor({   textarea: $('#editor') });
+</script>
+<script type="text/javascript">
+    var AddMsgUrl = "{:U('Msg/addmsg')}";
+
+// 删除提示
+function del(obj){
+    $.fDialog.alert("确定要删除吗？","question",{
+        shade : false,
+        animated : 'bounceInLeft', //入场动画效果CSS样式
+        removeAnimated : 'bounceOutRight', //退场动画效果CSS样式
+        buttons : [{text:'Yes',value:'ok',cls:'success'},{text:'No',value:'no',cls:'gray'}],
+        buttonClick : function(v){
+            if ('ok' != v) {
+                return true;
+            } else {
+                location.href = "{:U('Msg/del/id/"+obj+"')}";
+            }
+        }
+    });
+}
+</script>

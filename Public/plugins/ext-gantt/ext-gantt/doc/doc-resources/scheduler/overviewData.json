@@ -1,0 +1,49 @@
+{
+    "categories": [
+        {
+            "name": "Scheduler",
+            "groups": [
+                {
+                    "name": "Model",
+                    "classes": [
+                        "Sch.model.Event",
+                        "Sch.model.Resource",
+                        "Sch.model.Range",
+                        "Sch.data.TimeAxis"
+                    ]
+                },
+                {
+                    "name": "Components",
+                    "classes": [
+                        "Sch.panel.SchedulerGrid",
+                        "Sch.panel.SchedulerTree",
+                        "Sch.preset.Manager"
+                    ]
+                },
+                {
+                    "name": "Plugins",
+                    "classes": [
+                        "Sch.plugin.Printable",
+                        "Sch.plugin.Lines",
+                        "Sch.plugin.CurrentTimeLine",
+                        "Sch.plugin.DragSelector",
+                        "Sch.plugin.EventEditor",
+                        "Sch.plugin.Pan",
+                        "Sch.plugin.SimpleEditor",
+                        "Sch.plugin.SummaryColumn",
+                        "Sch.plugin.Zones",
+                        "Sch.plugin.TimeGap"
+                    ]
+                },
+                {
+                    "name": "Utility",
+                    "classes": [
+                        "Sch.util.Date"
+                    ]
+                }
+                
+            ]
+        }
+    ]
+}
+

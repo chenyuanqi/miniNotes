@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <!--Ext and ux styles -->
+    <link href="../../../ext-min/resources/css/ext-all.css" rel="stylesheet" type="text/css" />
+
+	<!--Scheduler styles-->
+    <link href="../../resources/css/sch-gantt-all.css" rel="stylesheet" type="text/css" />
+    
+	<!--Implementation specific styles-->
+    <link href="holidays.css" rel="stylesheet" type="text/css" />
+    <link href="../css/examples.css" rel="stylesheet" type="text/css" />
+      
+	<!--Ext lib and UX components-->
+    <script src="../../../ext-min/bootstrap.js" type="text/javascript"></script>
+
+    
+    <script src="../../gnt-all-debug.js" type="text/javascript"></script>
+    
+    <!--中文语言包-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+    <script src="../../../ext-min/locale/ext-lang-zh_CN.js" type="text/javascript"></script>
+    <script src="../../sch-lang-zh_CN.js" type="text/javascript"></script>
+    
+    <!--Application files-->
+    <script src="holidays.js" type="text/javascript"></script>
+
+    <title>甘特图日历功能</title>
+</head>
+<body>
+
+    <p>
+        该例子演示了甘特图的日历功能。程序可以设置工作日和非工作日，甘特图计算工期的时候可以跳过非工作日。<br>
+        默认的情况下，只有周末是非工作日。 程序员可以设置其他的节假日（如国庆节），也可以将周末设置为工作日（如倒休等）。<br>
+        节假日的类型是`Gnt.model.CalendarDay`， 存储在calendar的store里面.<br>
+        特殊的日期也可以用特殊的样式来显示。
+    </p>
+    <p>单击 <a href="holidays.js">holidays.js</a>查看源代码.</p>
+    <br />
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>项目甘特图 | 最懒进化-陈远琪 PHP海绵—www.chenyuanqi.com + Power by cyq</title>
+<link rel="shortcut icon" href="http://www.chenyuanqi.com/Template/Default/Style/Images/icon.ico" />
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0,  maximum-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/plugins/gantt/example/reset.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="__PUBLIC__/plugins/gantt/example/example.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="__PUBLIC__/plugins/gantt/jquery.ganttView.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="__PUBLIC__/plugins/gantt/lib/flick/jquery-ui-1.8.2.custom.css" />
+<script type="text/javascript" src="__PUBLIC__/plugins/gantt/lib/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/plugins/gantt/lib/jquery-ui-1.8.2.custom.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/plugins/gantt/lib/date.js"></script>
+<script type="text/javascript" src="__PUBLIC__/plugins/gantt/lib/holidays.js"></script>
+<script type="text/javascript" src="__PUBLIC__/plugins/gantt/jquery.ganttView.js"></script>
+<!-- 引入日期控件 -->
+<script src="__PUBLIC__/plugins/laydate/laydate.js"></script>
+<!-- 引入弹窗 -->
+<script src="__PUBLIC__/plugins/layer/layer.js"></script>
+<script type="text/javascript">
+    // 加载弹窗扩展模块
+    layer.config({
+        extend: 'extend/layer.ext.js'
+    });
+    // 设置日期皮肤
+    ;!function(){
+        laydate.skin('molv');
+    }();
+
+    $(function () {
+        var ganttData = {$taskStr};
+
+        var selectedObj = null;
+
+        $("#ganttChart").ganttView({
+            showWeekends: true,
+            data: ganttData,
+            cellWidth: 21,
+            start: new Date({$startDate|default='2015,06,01'}),
+            end: new Date({$endDate|default='2015,07,01'}),
+            slideWidth: 650,
+            excludeWeekends: true,
+            showDayOfWeek: true,
+            showHolidays: true,
+            excludeHolidays: true,
+            clicked: function (o) {
+                selectedObj = o;
+                var data = selectedObj.data('block-data');
+                var itemName = data.itemName ? data.itemName : "";
+                var seriesName = data.seriesName ? data.seriesName: "";
+                var text = data.text ? data.text : "";
+
+                var sYYYY = data.start.getYear();
+                sYYYY = sYYYY < 1000 ? sYYYY + 1900 : sYYYY;
+                var sMM = data.start.getMonth() + 1;
+                var sDD = data.start.getDate();
+
+                var eYYYY = data.end.getYear();
+                eYYYY = eYYYY < 1000 ? eYYYY + 1900 : eYYYY;
+                var eMM = data.end.getMonth() + 1;
+                var eDD = data.end.getDate();
+                // 月份不满处理
+                if (sMM < 10) {
+                    sMM = '0' + sMM;
+                }
+                if (eMM < 10) {
+                    eMM = '0' + eMM;
+                }
+                // 日期不满处理
+                if (sDD < 10) {
+                    sDD = '0' + sDD;
+                }
+                if (eDD < 10) {
+                    eDD = '0' + eDD;
+                }
+
+                $('#ganttData-item-id').val(data.itemId);
+                $('#ganttData-item-name').val(itemName);
+                $('#ganttData-series-id').val(data.seriesId);
+                $('#ganttData-series-name').val(seriesName);
+                $('#ganttData-series-start').val(sYYYY + "-" + sMM + "-" + sDD);
+                $('#ganttData-series-end').val(eYYYY + "-" + eMM + "-" + eDD);
+                $('#ganttData-series-text').val(text);
+
+            },
+            dblClicked: function (o) {
+                if (selectedObj == null) { return; }    
+
+                if (selectedObj.data('block-data').seriesId == o.data('block-data').seriesId) {
+                    $('#ganttData-reset').trigger("click");
+                }
+            },
+            changed: function (o) {
+                o.trigger("click");
+            }
+        });
+        // 追加
+        $('#ganttData-add').click(function () {
+            var name = $('#ganttData-series-name').val();
+            name = (name == "") ? null : name;
+
+            var text = $('#ganttData-series-text').val();
+            text = (text == "") ? null : text;
+
+            var start = $('#ganttData-series-start').val().split("-");
+            var end = $('#ganttData-series-end').val().split("-");
+
+            var data = [{
+                id: parseInt($('#ganttData-item-id').val()),
+                name: $('#ganttData-item-name').val(),
+                series: [{
+                    detail: $('#ganttData-series-detail').val(),
+                    name: name,
+                    text: text,
+                    start: new Date(start[0], parseInt(start[1]) - 1, start[2]),
+                    end: new Date(end[0], parseInt(end[1]) - 1, end[2]),
+                }]
+            }];
+
+            // 追加到数据库
+            if (validateForm()) {
+                $.ajax({
+                    'url' : "{:U('Process/addTaskAction')}",
+                    'type' : 'post',
+                    'data': {
+                        'pid'      : {$Think.get.id},
+                        'task_code': $('input[name="task_code"]').val(),
+                        'task_name': $('input[name="task_name"]').val(),
+                        'task_user': $('input[name="task_user"]').val(),
+                        'task_start':$('input[name="task_start"]').val(),
+                        'task_end' : $('input[name="task_end"]').val(),
+                        'task_done': $('input[name="task_done"]').val(),
+                    },
+                    'dataType': 'text',
+                    success: function(re) {
+                        if ('success' != re) {
+                            layer.msg(re);
+                        } else {
+                            var task_code = $('input[name="task_code"]').val();
+                            $('input[name="task_code"]').val(parseInt(task_code) + 1);
+                            $().ganttView.addData(data);
+                        }
+                    }
+                });
+            }
+                   
+        });
+        // 更新
+        $('#ganttData-refresh').click(function () {
+            if (selectedObj == null) { return; }
+
+            var data = selectedObj.data('block-data');
+            data.itemName = $('#ganttData-item-name').val();
+            data.seriesName = $('#ganttData-series-name').val();
+
+            var start = $("#ganttData-series-start").val().split("-");
+            data.start = new Date(start[0], parseInt(start[1]) - 1, start[2]);
+
+            var end = $("#ganttData-series-end").val().split("-");
+            data.end = new Date(end[0], parseInt(end[1]) - 1, end[2]);
+
+            data.text = $('#ganttData-series-text').val();
+
+            // 更新到数据库
+            if (validateForm()) {
+                $.ajax({
+                    'url' : "{:U('Process/editTaskAction')}",
+                    'type' : 'post',
+                    'data': {
+                        'pid'      : {$Think.get.id},
+                        'task_code': $('input[name="task_code"]').val(),
+                        'task_name': $('input[name="task_name"]').val(),
+                        'task_user': $('input[name="task_user"]').val(),
+                        'task_start':$('input[name="task_start"]').val(),
+                        'task_end' : $('input[name="task_end"]').val(),
+                        'task_done': $('input[name="task_done"]').val(),
+                    },
+                    'dataType': 'text',
+                    success: function(re) {
+                        if ('success' != re) {
+                            layer.msg(re);
+                        } else {
+                            selectedObj.refreshGanttData();
+                        }
+                    }
+                });
+            }
+
+        });
+        // 斩除
+        $('#ganttData-delete').click(function () {
+            if (selectedObj == null) { return; }
+
+            // 删除记录
+            if (validateForm()) {
+                $.ajax({
+                    'url' : "{:U('Process/delTaskAction')}",
+                    'type' : 'post',
+                    'data': {
+                        'pid'      : {$Think.get.id},
+                        'task_code': $('input[name="task_code"]').val()
+                    },
+                    'dataType': 'text',
+                    success: function(re) {
+                        if ('success' != re) {
+                            layer.msg('删除失败，请稍后重试~');
+                        } else {
+                            selectedObj.deleteGanttData(selectedObj);
+                            $('#ganttData-reset').trigger("click");
+                        }
+                    }
+                });
+            }     
+        });
+        // 复位
+        $('#ganttData-reset').click(function () {
+            location.reload();
+        });
+    });
+  </script>
+</head>
+<body>
+<div style="margin: 8px;">
+<h1>『{$programData.name}项目』</h1>
+<br/>
+　起始日期：<input type="text" name="program_start" value="{$programData.start_time}" onclick="laydate({choose: function(val){updateTime(val, 'start');}})" class="laydate-icon" style="width: 180px;" />
+　结束日期：<input type="text" name="program_end" value="{$programData.end_time}" onclick="laydate({choose: function(val){updateTime(val, 'end');}})" class="laydate-icon" style="width: 180px;" />
+</div>
+<div id="ganttChart"></div>
+<br/>
+<form action="" method="post" id="form">
+<div id="ganttData">
+    <div class="ganttData-item">
+        <div class="ganttData-header">任务编号</div>
+        <div class="ganttData-input"><input name="task_code" type="text" value="{$taskCode}" id="ganttData-item-id" disabled="disabled" style="width: 180px;" /></div>
+    </div>
+    <div class="ganttData-item">
+        <div class="ganttData-header">任务名称</div>
+        <div class="ganttData-input"><input name="task_name" type="text" id="ganttData-item-name" style="width: 180px;" /></div>
+    </div>
+    <div class="ganttData-item" style="display:none;">
+        <div class="ganttData-header">任务分配</div>
+        <div class="ganttData-input"><input type="text" id="ganttData-series-id" /></div>
+    </div>
+    <div class="ganttData-item">
+        <div class="ganttData-header">可选分配</div>
+        <div class="ganttData-input">
+        <select name="aim" id="aim" onchange="aimTo();">
+            <option value="0">--请选择--</option>
+            <volist name='teamData' id='team'>
+            <option value="{$team.name}">{$team.name}</option>
+            </volist>
+        </select>
+        </div>
+    </div>
+    <div class="ganttData-item">
+        <div class="ganttData-header">执行者</div>
+        <div class="ganttData-input"><input name="task_user" type="text" id="ganttData-series-name" style="width: 180px;" /></div>
+    </div>
+    <div class="ganttData-item">
+        <div class="ganttData-header">开始时间</div>
+        <div class="ganttData-input"><input name="task_start" type="text" onclick="laydate()" id="ganttData-series-start"　 class="laydate-icon" /></div>
+    </div>
+    <div class="ganttData-item">
+        <div class="ganttData-header">结束时间</div>
+        <div class="ganttData-input"><input name="task_end" type="text" onclick="laydate()" id="ganttData-series-end" class="laydate-icon" /></div>
+    </div>
+    <div class="ganttData-item">
+        <div class="ganttData-header">完成率</div>
+        <div class="ganttData-input"><input name="task_done" type="number" min='0' max='100' id="ganttData-series-text" style="width: 180px;" /></div>
+    </div>
+    <div class="ganttData-item">
+        <input type="button" id="ganttData-reset" style="cursor: pointer; padding: 4px 12px; color: #ffffff; background: #666666;-moz-border-radius:2em; -webkit-border-radius:2em; border-radius:2em;" value="刷新" />
+        <input type="button" id="ganttData-add" style="cursor: pointer; padding: 4px 12px; color: #ffffff;background: #0000ff;-moz-border-radius:2em; -webkit-border-radius:2em; border-radius:2em;" value="追加" />
+        <input type="button" id="ganttData-refresh" style="cursor: pointer; padding: 4px 12px; color: #ffffff;background: #00cc33;-moz-border-radius:2em; -webkit-border-radius:2em; border-radius:2em;" value="更新" />
+        <input type="button" id="ganttData-delete" style="cursor: pointer; padding: 4px 12px; color: #ffffff;background: #cc0000;-moz-border-radius:2em; -webkit-border-radius:2em; border-radius:2em;" value="斩除" />
+    </div>
+</div>
+</form>
+</body>
+</html>
+<script type="text/javascript">
+// 提交检测
+function validateForm() {
+    if ('' == $("input[name='task_code']").val()) {
+        layer.msg('提示：任务编号不能为空！');
+        return false;
+    }
+    if ('' == $("input[name='task_name']").val()) {
+        layer.msg('提示：任务名称不能为空！');
+        return false;
+    }
+    if ('' == $("input[name='task_user']").val()) {
+        layer.msg('提示：执行者不能为空！');
+        return false;
+    }
+    if ('' == $("input[name='task_start']").val()) {
+        layer.msg('提示：开始时间不能为空！');
+        return false;
+    }
+    if ('' == $("input[name='task_end']").val()) {
+        layer.msg('提示：结束时间不能为空！');
+        return false;
+    }
+    if ('' != $("input[name='task_done']").val()) {
+        var done = $("input[name='task_done']").val();
+        if (parseInt(done) < 0 || parseInt(done) > 100) {
+            layer.msg('提示：完成率范围必须是 0 ~ 100 ！');
+            return false;
+        } 
+    }
+    return true;
+}
+// 更新项目开始时间
+function updateTime(obj, type) {
+    $.ajax({
+        url: "{:U('Process/saveProgramTime')}",
+        type: "POST",
+        data: {
+            'pid' : {$Think.get.id},
+            'type': type,
+            'val' : obj
+        },
+        dataType: "text",
+        success: function(re) {
+            if ('success' != re) {
+                layer.msg('更新项目时间失败，请稍后重试~');
+            } else {
+                location.reload();
+            }
+        }
+    });
+}
+// 分配任务
+function aimTo() {
+    var name = $('#aim').val();
+    if (name) {
+        $("input[name='task_user']").val(name);
+    }
+}
+</script>

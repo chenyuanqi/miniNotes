@@ -1,0 +1,95 @@
+{
+    "categories": [
+        // gantt
+        {
+            "name": "Gantt",
+            "groups": [
+                {
+                    "name": "Model",
+                    "classes": [
+                        "Gnt.model.Task",
+                        "Gnt.model.Resource",
+                        "Gnt.model.Dependency",
+                        "Gnt.model.Assignment",
+                        "Gnt.data.TaskStore",
+                        "Gnt.data.Calendar",
+                        "Gnt.model.CalendarDay"
+                    ]
+                },
+                {
+                    "name": "Components",
+                    "classes": [
+                        "Gnt.panel.Gantt"
+                    ]
+                },
+                {
+                    "name": "Plugins",
+                    "classes": [
+                        "Gnt.plugin.DependencyEditor",
+                        "Gnt.plugin.Printable",
+                        "Gnt.plugin.TaskContextMenu"
+                    ]
+                },
+                {
+                    "name": "Columns",
+                    "classes": [
+                        "Gnt.column.StartDate",
+                        "Gnt.column.EndDate",
+                        "Gnt.column.Duration",
+                        "Gnt.column.ResourceAssignment",
+                        "Gnt.column.PercentDone"
+                    ]
+                }
+            ]
+        },
+        // eof Gantt
+        
+        // scheduler
+        {
+            "name": "Scheduler",
+            "groups": [
+                {
+                    "name": "Model",
+                    "classes": [
+                        "Sch.model.Event",
+                        "Sch.model.Resource",
+                        "Sch.model.Range",
+                        "Sch.data.TimeAxis"
+                    ]
+                },
+                {
+                    "name": "Components",
+                    "classes": [
+                        "Sch.panel.SchedulerGrid",
+                        "Sch.panel.SchedulerTree",
+                        "Sch.preset.Manager"
+                    ]
+                },
+                {
+                    "name": "Plugins",
+                    "classes": [
+                        "Sch.plugin.Printable",
+                        "Sch.plugin.Lines",
+                        "Sch.plugin.CurrentTimeLine",
+                        "Sch.plugin.DragSelector",
+                        "Sch.plugin.EventEditor",
+                        "Sch.plugin.Pan",
+                        "Sch.plugin.SimpleEditor",
+                        "Sch.plugin.SummaryColumn",
+                        "Sch.plugin.Zones",
+                        "Sch.plugin.TimeGap"
+                    ]
+                },
+                {
+                    "name": "Utility",
+                    "classes": [
+                        "Sch.util.Date"
+                    ]
+                }
+                
+            ]
+        }
+        // eof scheduler
+    ]
+}
+

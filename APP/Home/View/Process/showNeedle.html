@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>需求分析 | 最懒进化-陈远琪 PHP海绵—www.chenyuanqi.com + Power by cyq.html</title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <link rel="shortcut icon" href="http://www.chenyuanqi.com/Template/Default/Style/Images/icon.ico" />
+    <meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0,  maximum-scale=1.0" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/public.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/font-awesome.min.css"/>
+    <link rel='stylesheet' href='__PUBLIC__/css/bootstrap.css' type='text/css' media='all' />
+    <script type='text/javascript' src='__PUBLIC__/js/jquery-2.1.1.min.js'></script>
+    <script type='text/javascript' src='__PUBLIC__/js/bootstrap.js'></script>
+    <script type='text/javascript' src='__PUBLIC__/js/ajax.js'></script>
+</head>
+<body>
+    <div class="container">
+            <include file='Common:header'/>
+                <div id="info"></div>
+        <div class="look-blog cgx-txt clearfix">
+            <h1 class="center-h1">
+                {$program}项目 ({$show.title})
+            </h1>
+                 <p class="look-blog-ico">
+                <span><i class="fa fa-user"></i><a href="#">{$author}</a></span>
+                <span class="blog-box-ico"><i class="fa fa-eye"></i>{$show.click_num}</span>
+                <span class="blog-box-ico"><i class="fa fa-clock-o"></i>{$show.create_time}</span>
+                </p>
+            <div class="rzck-txt-box">
+                <h2>项目背景</h2>
+                <p>{$show.background}</p>
+            </div>
+            <div class="rzck-txt-box">
+                <h2>项目目标</h2>
+                <p>{$show.target}</p>
+            </div>
+            <div class="rzck-txt-box">
+                <h2>项目计划</h2>
+                <p>{$show.plan}</p>
+            </div>
+            <div class="rzck-txt-box">
+                <h2>项目描述</h2>
+                <p>{$show.content|htmlspecialchars_decode}</p>
+            </div>
+        </div>
+    </div>
+    <script src="__PUBLIC__/js/index.js"></script>
+</body>
+</html>

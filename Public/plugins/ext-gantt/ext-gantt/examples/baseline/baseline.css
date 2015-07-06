@@ -1,0 +1,12 @@
+.sch-gantt-item,
+.sch-gantt-progress-bar
+{
+    -moz-transition-property: height, top;
+    -moz-transition-duration: 0.4s;
+    -webkit-transition-property: height, top;
+    -webkit-transition-duration: 0.4s;
+    -ms-transition-property:  height, top;
+    -ms-transition-duration: 0.4s;
+    transition-property: height, top;
+    transition-duration: 0.4s;
+}

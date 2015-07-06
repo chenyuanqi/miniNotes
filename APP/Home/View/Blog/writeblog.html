@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0,  maximum-scale=1.0" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <title>写日志</title>
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/public.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/font-awesome.min.css"/>
+    <link rel='stylesheet' href='__PUBLIC__/css/bootstrap.css' type='text/css' media='all' />
+    <script type='text/javascript' src='__PUBLIC__/js/jquery-2.1.1.min.js'></script>
+    <script type='text/javascript' src='__PUBLIC__/js/bootstrap.js'></script>
+    <script type="text/javascript" src="__PUBLIC__/plugins/tinymce/tinymce.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    tinymce.init({
+        selector: "textarea",
+        plugins: [
+        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+        "searchreplace wordcount visualblocks visualchars code fullscreen",
+        "insertdatetime media nonbreaking save table contextmenu directionality",
+        "emoticons template paste textcolor colorpicker textpattern"
+        ],
+      toolbar1: "code preview | undo redo | bold italic underline strikethrough | alignleft aligncenter alignright  | styleselect | fontsizeselect | table | charmap emoticons | bullist numlist | link unlink | fullscreen",
+      toolbar2: "print image media | forecolor backcolor emoticons",
+        menubar: false,
+        toolbar_items_size: 'small',
+        language:'zh_CN',
+        autosave_ask_before_unload: false
+
+    });
+</script>
+    <div class="container">
+            <include file='Common:header'/>
+        <div class="cgx-txt">
+        <h1><i class="fa fa-pencil"></i>写日志</h1>
+        <div class="xrz-box">
+    <if condition = 'ACTION_NAME eq "edit"'>
+        <form action="{:U('Blog/editpost')}" method="post">
+            <foreach name='blog' item='v'>
+                <div class="xrz-input-box">
+                    <label id="xrz-tit">标&nbsp;&nbsp;题:</label>
+                    <input type="text" name="title" value="{$v.title}" required/>
+                </div>
+                <div class="blog-text txt-srk">
+                    <label id="xrz-tit">本周总结:</label>
+                    <textarea name="bzzj" style="height:255px">{$v.bzzj}</textarea>
+                </div>
+                <div class="blog-text txt-srk">
+                    <label id="xrz-tit">下周计划:</label>
+                    <textarea name="xzjh" style="height:255px">{$v.xzjh}</textarea>
+                </div>
+                <div class="blog-text txt-srk">
+                    <label id="xrz-tit">建议反馈:</label>
+                    <textarea name="yjfk" style="height:255px">{$v.yjfk}</textarea>
+                </div>
+                <input type="hidden" name="id" value="{$v.id}"/>
+            </foreach>
+    <else/>
+        <form action="{:U('Blog/savedraft')}" method="post">
+                <div class="xrz-input-box">
+                    <label id="xrz-tit">标&nbsp;&nbsp;题:</label>
+                    <input type="text" name="title" required/>
+                </div>
+                <div class="blog-text txt-srk">
+                    <label id="xrz-tit">本周总结:</label>
+                    <textarea name="bzzj" style="height:255px"></textarea>
+                </div>
+                <div class="blog-text txt-srk">
+                    <label id="xrz-tit">下周计划:</label>
+                    <textarea name="xzjh" style="height:255px"></textarea>
+                </div>
+                <div class="blog-text txt-srk">
+                    <label id="xrz-tit">建议反馈:</label>
+                    <textarea name="yjfk" style="height:255px"></textarea>
+                </div>
+    </if>
+
+                <div class="btn-div">
+                    <input type="submit" class="btn-box" id="submit-button" value="保存日志"/>
+                </div>
+        </div>
+        </form>
+        </div>
+    </div>
+    <script src="__PUBLIC__/js/index.js"></script>
+</body>
+</html>

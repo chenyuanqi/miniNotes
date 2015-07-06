@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>我的资料 | 最懒进化-陈远琪 PHP海绵—www.chenyuanqi.com + Power by cyq</title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <link rel="shortcut icon" href="http://www.chenyuanqi.com/Template/Default/Style/Images/icon.ico" />
+    <meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0,  maximum-scale=1.0" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/public.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/font-awesome.min.css"/>
+    <link rel='stylesheet' href='__PUBLIC__/css/bootstrap.css' type='text/css' media='all' />
+    <script type='text/javascript' src='__PUBLIC__/js/jquery-2.1.1.min.js'></script>
+    <script type='text/javascript' src='__PUBLIC__/js/bootstrap.js'></script>
+</head>
+<body>
+    <div class="container">
+            <include file='Common:header'/>
+        <div class="vip-main cgx-txt">
+        <h1 class="center-h1"><i class="fa fa-user"></i>修改资料</h1>
+                <div class="vip-content">
+                    <div class="vip-txt-box">
+                    <form action="{:U('User/datapost')}"  enctype="multipart/form-data" method="post">
+                    <foreach name="user_data" item="v">
+                    <table>
+                        <tr>
+                            <td class="vip-title">姓名：</td>
+                            <td class="vip-input"><input type="text" name="name" value="{$v.name}" required/></td>
+                        </tr>
+                        <tr>
+                            <td class="vip-title">姓别：</td>
+                            <td class="vip-input">
+                                <input name="sex" type="radio" value="0" <?php if ($v['sex'] == '0') echo 'checked="checked"'; ?> class="vip-sex"/>男
+                                <input name="sex" type="radio" value="1" <?php if ($v['sex'] == '1') echo 'checked="checked"'; ?> class="vip-sex"/>女
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="vip-title">电话：</td>
+                            <td class="vip-input"><input type="text" name="tel" value="{$v.tel}" required/></td>
+                        </tr>
+                        <tr>
+                            <td class="vip-title">邮箱：</td>
+                            <td class="vip-input"><input type="text" name="email" value="{$v.email}" required/></td>
+                        </tr>
+                        <tr>
+                            <td class="vip-title">部门：</td>
+                            <td class="vip-input">
+                                <select name="dep" required>
+                                  <option value="0" selected="selected">请选择部门</option>
+                                  <option value="4" <?php if ($v['dep'] == '4') echo 'selected="selected"'; ?> >行政部</option>
+                                  <option value="3" <?php if ($v['dep'] == '3') echo 'selected="selected"'; ?> >技术部</option>
+                                  <option value="2" <?php if ($v['dep'] == '2') echo 'selected="selected"'; ?> >市场部</option>
+                                  <option value="1" <?php if ($v['dep'] == '1') echo 'selected="selected"'; ?> >财务部</option></select>
+                            </td>
+                        </tr>
+                    </table>
+
+                    </div>
+                    <div class="vip-img-box">
+                        <span class="vip-img">
+                            <img src="__ROOT__{$v.img}" alt="">
+                            <input type="file" name="img" class="file-btn"/>
+                            <span class="span-btn"><i class="fa fa-cloud-upload"></i>上传</span>
+                        </span>
+                    </div>
+
+                <div class="vip-text">
+                    <table>
+                        <tr>
+                            <td class="vip-title">签名：</td>
+                            <td class="vip-input"><textarea name="content" required>{$v.content}</textarea></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <input type="hidden" name="id" value="{$v.id}"/>
+                            <td class="vip-input"><input type="submit" class="vip-btn" id="submit-button" value="提&nbsp;&nbsp;交"></td>
+                        </tr>
+                    </table>
+                    </foreach>
+                    </form>
+                </div>
+                </div>
+        </div>
+    </div>
+    <script src="__PUBLIC__/js/index.js"></script>
+</body>
+</html>

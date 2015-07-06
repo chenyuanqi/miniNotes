@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0,  maximum-scale=1.0" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <title>{$name}的日志</title>
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/public.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/font-awesome.min.css"/>
+    <link rel='stylesheet' href='__PUBLIC__/css/bootstrap.css' type='text/css' media='all' />
+    <script type='text/javascript' src='__PUBLIC__/js/jquery-2.1.1.min.js'></script>
+    <script type='text/javascript' src='__PUBLIC__/js/bootstrap.js'></script>
+</head>
+<body>
+    <div class="container">
+            <include file='Common:header'/>
+        <div class="cgx-txt">
+        <div class="blog-user">
+        <foreach name='user' item='v'>
+            <span  class="randcolor"><a href="{:U('Blog/index', array('uid' => $v['id']))}">{$v.name}</a></span>
+        </foreach>
+        </div>
+        <h1><i class="fa fa-star"></i>{$name}的日志</h1>
+            <div class="cgx-sbox">
+                <ul class="cgx-txt-box clearfix">
+                <foreach name='myblog' item='v' key='i'>
+                    <li>
+                        <div class="cgx-sbox-top">
+                            <h2 style="background:#63BB47;"><?php echo $i+1; ?></h2>
+                            <a href="{:U('Blog/look', array('id' => $v['id']))}"><p>{$v.title}</p></a>
+                        </div>
+                        <div class="cgx-sbox-bottom">
+                            <p>
+                            <span> <i class="fa fa-user"></i>{$v.author}</span>
+                            <!-- <span class="blog-box-ico"><i class="fa fa-thumbs-up"></i>{$v.top}</span>
+                            <span class="blog-box-ico"><i class="fa fa-eye"></i>{$v.visits}</span> -->
+                            <span class="blog-box-ico"><i class="fa fa-clock-o"></i>{$v.time|date='Y-m-d', ###}</span>
+                            <if condition="$v['uid'] eq $_SESSION['id']">
+                            <span class="blog-box-ico"><a href="{:U('Blog/edit', array('id' => $v['id']))}"><i class="fa fa-pencil"></i>编辑</a></span>
+                            <span class="blog-box-ico"><a href="#" onclick='del({$v.id});'><i class="fa fa-trash"></i>删除</a></span>
+                            </if> 
+                            </p>
+                        </div>
+                    </li>
+                </foreach>
+                <if condition="$myblog eq null and $_SESSION['id'] eq $_GET['uid']">
+                    <p style="text-align:center;">✘您进入本系统后还没发布任何日志呢，赶紧来<a href="{:U('Blog/writeblog')}">写一篇</a>让伙伴们都认识一下您的文采飞扬吧！</p>
+                </if>
+                <if condition="$myblog eq null and $_SESSION['id'] neq $_GET['uid']">
+                    <p style="text-align:center;">✘您的伙伴 {$name} 进入本系统后还没发布过任何日志哟，线下记得提醒他，系统已经拿他没办法了，呜呜。。。</p>
+                </if>
+                </ul>
+                    <div class="msg-page">
+                        <div class="page">{$page}</div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <script src="__PUBLIC__/js/index.js"></script>
+</body>
+</html>
+<!-- 引入弹框 --> 
+<script type='text/javascript' src='__PUBLIC__/js/fDialog/jquery.fDialog.min.js'></script>
+<script type='text/javascript' src='__PUBLIC__/js/fDialog/jquery.fLayout.min.js'></script>
+<script type='text/javascript' src='__PUBLIC__/js/fDialog/fDialog.plugin.js'></script>
+<link rel="stylesheet" href="__PUBLIC__/js/fDialog/css/fDialog.css" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/js/fDialog/css/animate.min.css" type="text/css" />
+<script type="text/javascript">
+function del(obj){
+    $.fDialog.alert("确定要删除吗？","question",{
+        shade : false,
+        animated : 'bounceInLeft', //入场动画效果CSS样式
+        removeAnimated : 'bounceOutRight', //退场动画效果CSS样式
+        buttons : [{text:'Yes',value:'ok',cls:'success'},{text:'No',value:'no',cls:'gray'}],
+        buttonClick : function(v){
+            if ('ok' != v) {
+                return true;
+            } else {
+                location.href = "{:U('Blog/del/id/"+obj+"')}";
+            }
+        }
+    });
+}
+</script>

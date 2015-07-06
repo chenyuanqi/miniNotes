@@ -1,0 +1,66 @@
+<nav class="navbar navbar-default equinav navlist clearfix" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button> <span class="navbar-brand"><a href="{:U('Blog/writeblog')}"><i class="fa fa-pencil-square"></i></a></span>
+    </div>
+    <!-- /.navbar-header -->
+    <div class="collapse navbar-collapse">
+        <div class="nav-zoom">
+            <ul class="nav navbar-nav">
+                <li><a href="{:U('Index/index', array('p' => 0))}">本周日志</a>
+                </li>
+                <li><a href="{:U('Blog/index', array('uid' => session('id')))}" class="dropdown-toggle" data-toggle="dropdown">日志管理<b class="caret"></b></a>
+                    <ul class="dropdown-menu depth_0">
+                        <li><a href="{:U('Blog/agenda')}">日程模版</a>
+                        </li>
+                        <li><a href="{:U('Blog/index', array('uid' => session('id')))}">我的日志</a>
+                        </li>
+                        <li><a href="{:U('Blog/draft')}">草稿箱</a>
+                        </li>
+                        <li><a href="{:U('Blog/writeblog')}">写日志</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="{:U('Share/index')}">话题/分享</a>
+                </li>
+                <li><a href="{:U('Msg/index')}">交流区</a>
+                </li>
+                <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">个人中心<b class="caret"></b></a>
+                    <ul class="dropdown-menu depth_0">
+                    <!--
+                        <li><a href="{:U('User/sendEmail')}">诉说邮件</a>
+                        </li>
+                        -->
+                        <li><a href="{:U('User/index')}">个人资料</a>
+                        </li>
+                        <li><a href="{:U('User/changgepwd')}">修改密码</a>
+                        </li>
+                        <if condition="session('admin') neq '0'">
+                            <li><a href="{:U('User/adduser')}">添加用户</a>
+                            </li>
+                        </if>
+                    </ul>
+                </li>
+                <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">项目中心<b class="caret"></b></a>
+                    <ul class="dropdown-menu depth_0">
+                        <li><a href="{:U('Process/needle')}">需求分析</a>
+                        </li>
+                        <li><a href="{:U('Process/procedure')}">甘特图</a>
+                        </li>
+                        <li><a href="{:U('Process/faq')}">FAQ</a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul> 
+            <if condition="$Think.session.name neq ''">
+            <span class="nav-r-user"><?php echo session('name'); ?>，欢迎您！<a href="{:U('Index/logout')}">退出登录</a></span>
+            <else/>
+            <span class="nav-r-user">您未登录！<a href="{:U('Login/index')}">点击登录</a></span>
+            </if>
+        </div>
+    </div>
+    <!-- /.navbar-collapse -->
+</nav>

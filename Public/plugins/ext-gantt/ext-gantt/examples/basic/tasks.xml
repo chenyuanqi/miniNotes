@@ -1,0 +1,124 @@
+<Tasks>
+    <Task>
+        <Id>Sencha</Id>
+        <leaf>0</leaf>
+        <Name>Sencha发布</Name>
+        <StartDate>2010-01-18T00:00:00</StartDate>
+        <EndDate>2010-01-28T00:00:00</EndDate>
+        <Duration>3</Duration>
+        <expanded>1</expanded>
+        <PercentDone>50</PercentDone>
+        <cls>Sencha</cls>
+        <Tasks>
+            <Task>
+                <expanded>1</expanded>
+                <StartDate>2010-01-18T00:00:00</StartDate>
+                <EndDate>2010-01-28T00:00:00</EndDate>
+                <Duration>3</Duration>
+                <PercentDone>50</PercentDone>
+                <Id>2</Id>
+                <leaf>0</leaf>
+                <Name>Ext 4.x 分支</Name>
+                <Tasks>
+                    <Task>
+                        <Duration>4</Duration>
+                        <PercentDone>50</PercentDone>
+                        <StartDate>2010-01-18T00:00:00</StartDate>
+                        <EndDate>2010-01-22T00:00:00</EndDate>
+                        <Id>3</Id>
+                        <leaf>1</leaf>
+                        <Name>Ext JS 4.0.1</Name>
+                    </Task>
+                    <Task>
+                        <Duration>4</Duration>
+                        <PercentDone>30</PercentDone>
+                        <StartDate>2010-01-22T00:00:00</StartDate>
+                        <EndDate>2010-01-25T00:00:00</EndDate>
+                        <Id>4</Id>
+                        <leaf>1</leaf>
+                        <Name>Ext JS 4.0.2</Name>
+                    </Task>
+                    <Task>
+                        <Duration>4</Duration>
+                        <PercentDone>10</PercentDone>
+                        <StartDate>2010-01-25T00:00:00</StartDate>
+                        <EndDate>2010-01-28T00:00:00</EndDate>
+                        <Id>5</Id>
+                        <leaf>1</leaf>
+                        <Name>Ext JS 4.0.3</Name>
+                    </Task>
+                </Tasks>
+            </Task>
+        </Tasks>
+    </Task>
+    <Task>
+        <expanded>1</expanded>
+        <StartDate>2010-01-28T00:00:00</StartDate>
+        <EndDate>2010-02-11T00:00:00</EndDate>
+        <Duration>3</Duration>
+        <PercentDone>50</PercentDone>
+        <Id>Bryntum</Id>
+        <cls>Bryntum</cls>
+        <leaf>0</leaf>
+        <Name>Extjs甘特图发布</Name>
+        <Tasks>
+            <Task>
+                <Duration>3</Duration>
+                <PercentDone>50</PercentDone>
+                <StartDate>2010-01-28T00:00:00</StartDate>
+                <EndDate>2010-02-05T00:00:00</EndDate>
+                <Id>13</Id>
+                <leaf>1</leaf>
+                <Name>产品 X</Name>
+            </Task>
+            <Task>
+                <Duration>4</Duration>
+                <PercentDone>30</PercentDone>
+                <StartDate>2010-02-05T00:00:00</StartDate>
+                <EndDate>2010-02-09T00:00:00</EndDate>
+                <Id>14</Id>
+                <leaf>1</leaf>
+                <Name>Extjs甘特图 2.0</Name>
+            </Task>
+            <Task>
+                <Duration>4</Duration>
+                <PercentDone>10</PercentDone>
+                <StartDate>2010-02-09T00:00:00</StartDate>
+                <EndDate>2010-02-11T00:00:00</EndDate>
+                <Id>15</Id>
+                <leaf>1</leaf>
+                <Name>Ext 资源甘特图 2.0</Name>
+            </Task>
+        </Tasks>
+    </Task>
+    <Task>
+        <Id>33</Id>
+        <leaf>1</leaf>
+        <Name>其他任务 1</Name>
+    </Task>
+    <Task>
+        <Id>34</Id>
+        <leaf>1</leaf>
+        <Name>其他任务 11</Name>
+    </Task>
+    <Task>
+        <Id>35</Id>
+        <leaf>1</leaf>
+        <Name>其他任务 2.0</Name>
+    </Task>
+    <Task>
+        <Id>43</Id>
+        <leaf>1</leaf>
+        <Name>其他任务 14</Name>
+    </Task>
+    <Task>
+        <Id>44</Id>
+        <leaf>1</leaf>
+        <Name>其他任务 3</Name>
+    </Task>
+    <Task>
+        <Id>45</Id>
+        <leaf>1</leaf>
+        <Name>其他任务 4</Name>
+    </Task>
+</Tasks>

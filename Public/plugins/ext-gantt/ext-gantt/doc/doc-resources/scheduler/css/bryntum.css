@@ -1,0 +1,43 @@
+.logo {
+    background         : url(../images/bryntum-logo.png) no-repeat;
+    
+    left               : 5px !important;
+    top                : 10px !important;
+    width              : 240px !important;
+}
+
+.logo button {
+    width              : 240px !important;
+}
+
+
+
+#center-container, #west-region-container {
+    background-image   : url(../images/headBG.png);
+}
+
+.notice {
+	float                  : left;
+	background-color       : transparent;
+}
+
+.notice p {
+     
+}
+
+.notice ul {
+	font-weight             : normal;
+    list-style-type         : disc;
+    text-align              : left;  
+}
+
+.notice ul li {
+    list-style              : disc inside;
+}
+
+
+
+#loading .title
+{
+    display:none;
+}

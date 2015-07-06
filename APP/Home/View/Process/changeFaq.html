@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Change FAQ | 最懒进化-陈远琪 PHP海绵—www.chenyuanqi.com + Power by cyq.html</title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <link rel="shortcut icon" href="http://www.chenyuanqi.com/Template/Default/Style/Images/icon.ico" />
+    <meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0,  maximum-scale=1.0" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/selectordie.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/selectordie_theme_01.css">
+    <!--[if lte IE 8]>
+    <style type="text/css"/>
+    input {
+        display: block !important;
+        float: left;
+        margin: 0 15px;
+    }
+    #checkbox-1-1 + label, #checkbox-1-2 + label, #checkbox-1-3 + label {
+        display: none;
+    }
+    </style>
+    <![endif]-->
+    <link rel="stylesheet" href="__PUBLIC__/css/public.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/font-awesome.min.css"/>
+    <link rel='stylesheet' href='__PUBLIC__/css/bootstrap.css' type='text/css' media='all' />
+    <script type='text/javascript' src='__PUBLIC__/js/jquery-2.1.1.min.js'></script>
+    <script type='text/javascript' src='__PUBLIC__/js/bootstrap.js'></script>
+    <script type='text/javascript' src='__PUBLIC__/js/modernizr.js'></script>
+</head>
+<body>
+    <div class="container">
+            <include file='Common:header'/>
+        <div class="cgx-txt">
+        <h1><i class="fa fa-pencil"></i>Change FAQ</h1>
+        <div class="xrz-box">
+            <form action="{:U('Process/changeFaqAction/type/class')}" method="post">
+                <div class="xrz-input-box">
+                    <label id="xrz-tit">项目名称:</label>
+                    {$program}
+                </div>
+
+                <div class="xrz-input-box">
+                    <label id="xrz-tit">FAQ 分类:</label>
+                    <input type="text" name="class" value="{$class.name}" placeholder='这里输入分类名' required/>
+                </div>
+                <div class="xrz-input-box">
+                    <label id="xrz-tit">FAQ 排序:</label>
+                    <input type="text" name="rank" value="{$class.sort|default=0}" required/>
+                </div>
+                <div class="btn-div">
+                    <input type="hidden" name="pid" value="{$Think.get.id}" />
+                    <if condition="$Think.get.act eq 'editClass' and $Think.get.cid neq ''">
+                    <input type="hidden" name="cid" value="{$Think.get.cid}" />
+                    <input type="submit" class="btn-box" id="submit-button" value="修 改"/>
+                    <a href="{:U('Process/changeFaq', array('id' => $_GET['id']))}">返回新增</a>
+                    <else />
+                    <input type="submit" class="btn-box" id="submit-button" value="新 增"/>
+                    </if>
+                </div>
+            </form>
+            
+            <div style="clear:both;"> </div>
+            <!-- 项目分类列表 -->
+            <label id="xrz-tit">分类列表:</label>
+                <ul class="cgx-txt-box clearfix">
+                <foreach name='categoryData' item='v' key='i'>
+                    <li>
+                        <div class="cgx-sbox-top">
+                            <h2 style="background:#63BB47;"><?php echo $i+1; ?></h2>
+                            <strong>{$v.name}</strong>
+                        </div>
+                        <div class="cgx-sbox-bottom">
+                            <p>
+                            <if condition="session('id') eq $v['uid']">
+                                <span><a href="{:U('Process/changeFaq', array('id' =>$_GET['id'], 'cid' => $v['id'], 'act' => 'editClass'))}"><i class="fa fa-pencil"></i>编辑</a></span>
+                                <span class="blog-box-ico"><a href="#" onclick='del({$v.id}, "category");'><i class="fa fa-trash"></i>删除</a></span>
+                            <else/>
+                                <span><i class="fa fa-user"></i>{$v.author}</span>
+                            </if>
+                            <span class="blog-box-ico"><i class="fa fa-clock-o"></i>{$v.create_time}</span>
+                            </p>
+                        </div>
+                    </li>
+                </foreach>
+                </ul>
+            <!-- 项目分类列表End -->
+            <hr/>
+            <form action="{:U('Process/changeFaqAction/type/content')}" method="post">
+                <div class="xrz-input-box">
+                    <label id="xrz-tit">FAQ 分类:</label>
+                    <select name="cid">
+                        <option value="0">请选择</option>
+                        <volist name="categoryData" id="rs">
+                        <option value="{$rs.id}" <if condition="$faq['cid'] eq $rs['id']"> selected ='selected'</if> >{$rs.name}</option>
+                        </volist>
+                    </select>
+                </div>
+                <div class="xrz-input-box">
+                    <label id="xrz-tit">FAQ 问题:</label>
+                    <input type="text" value="{$faq.question}" name="title" placeholder="这里输入问题" required/>
+                </div>
+                <div class="xrz-input-box">
+                    <label id="xrz-tit">阐述答案:</label>
+                    <textarea id="editor" name="content" placeholder="这里输入问题对应的答案内容" >{$faq.answer}</textarea>
+                </div>
+                <div class="btn-div">
+                    <if condition="$Think.get.act eq 'editFaq' and $Think.get.fid neq ''">
+                    <input type="hidden" name="fid" value="{$Think.get.fid}" />
+                    <input type="submit" class="btn-box" id="submit-button" value="修 改"/>
+                    <a href="{:U('Process/changeFaq', array('id' => $_GET['id']))}">返回添加</a>
+                    <else />
+                    <input type="submit" class="btn-box" id="submit-button" value="添 加"/>
+                    </if>
+                </div>
+            </form>
+
+            <div style="clear:both;"> </div>
+            <!-- FAQ 列表 -->
+            <label id="xrz-tit">Faq 列表:</label>
+                <ul class="cgx-txt-box clearfix">
+                <foreach name='faqData' item='v' key='i'>
+                    <li>
+                        <div class="cgx-sbox-top">
+                            <h2 style="background:#63BB47;"><?php echo $i+1; ?></h2>
+                            <strong>{$v.question}</strong>
+                        </div>
+                        <div class="cgx-sbox-bottom">
+                            <p>
+                            <if condition="session('id') eq $v['uid']">
+                                <span><a href="{:U('Process/changeFaq', array('id' =>$_GET['id'], 'fid' => $v['id'], 'act' => 'editFaq'))}"><i class="fa fa-pencil"></i>编辑</a></span>
+                                <span class="blog-box-ico"><a href="#" onclick='del({$v.id}, "faq");'><i class="fa fa-trash"></i>删除</a></span>
+                            <else/>
+                                <span><i class="fa fa-user"></i>{$v.author}</span>
+                            </if>
+                            <span class="blog-box-ico"><i class="fa fa-clock-o"></i>{$v.create_time}</span>
+                            </p>
+                        </div>
+                    </li>
+                </foreach>
+                </ul>
+            <!-- FAQ 列表End -->
+        </div>
+        </div>
+    </div>
+    <script src="__PUBLIC__/js/index.js"></script>
+</body>
+</html>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/js/simditor/styles/simditor.css" />
+<script type="text/javascript" src="__PUBLIC__/js/simditor/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/simditor/scripts/module.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/simditor/scripts/hotkeys.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/simditor/scripts/uploader.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/simditor/scripts/simditor.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/selectordie.min.js"></script>
+<script type='text/javascript'>
+var editor = new Simditor({   textarea: $('#editor') });
+$(function() {
+    // 下拉框优化
+    $('select').selectOrDie();
+})
+</script>
+<!-- 引入弹框 --> 
+<script type='text/javascript' src='__PUBLIC__/js/fDialog/jquery.fDialog.min.js'></script>
+<script type='text/javascript' src='__PUBLIC__/js/fDialog/jquery.fLayout.min.js'></script>
+<script type='text/javascript' src='__PUBLIC__/js/fDialog/fDialog.plugin.js'></script>
+<link rel="stylesheet" href="__PUBLIC__/js/fDialog/css/fDialog.css" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/js/fDialog/css/animate.min.css" type="text/css" />
+<script type="text/javascript">
+
+function del(obj, style){
+    $.fDialog.alert("确定要删除吗？","question",{
+        shade : false,
+        animated : 'bounceInLeft', //入场动画效果CSS样式
+        removeAnimated : 'bounceOutRight', //退场动画效果CSS样式
+        buttons : [{text:'Yes',value:'ok',cls:'success'},{text:'No',value:'no',cls:'gray'}],
+        buttonClick : function(v){
+            if ('ok' != v) {
+                return true;
+            } else {
+                if ('faq' != style) {
+                    location.href = "{:U('Process/delFaq/id/"+obj+"')}";
+                } else {
+                    location.href = "{:U('Process/delFaq/style/faq/id/"+obj+"')}";
+                }
+                
+            }
+        }
+    });
+}
+</script>

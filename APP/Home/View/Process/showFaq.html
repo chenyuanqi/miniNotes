@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+	<title>FAQ | 最懒进化-陈远琪 PHP海绵—www.chenyuanqi.com + Power by cyq</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="http://www.chenyuanqi.com/Template/Default/Style/Images/icon.ico" />
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="__PUBLIC__/js/faq/css/reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="__PUBLIC__/js/faq/css/style.css"> <!-- Resource style -->
+	<script src="__PUBLIC__/js/faq/js/modernizr.js"></script> <!-- Modernizr -->
+</head>
+<body>
+<header>
+	<h1>FAQ | {$program}</h1>
+</header>
+<section class="cd-faq">
+	<ul class="cd-faq-categories">
+		<volist name="faqData" id='rs'>
+		<if condition="$key eq 0">
+		<li><a class="selected" href="#{$rs.name}">{$rs.name}</a></li>
+		<else/>
+		<li><a href="#{$rs.name}">{$rs.name}</a></li>
+		</if>
+		</volist>
+	</ul> <!-- cd-faq-categories -->
+
+	<div class="cd-faq-items">
+		<volist name='faqData' id='rs'>
+		<ul id="{$rs.name}" class="cd-faq-group">
+			<li class="cd-faq-title"><h2>{$rs.name}</h2></li>
+			<volist name="rs['faq']" id='rs'>
+			<li>
+				<a class="cd-faq-trigger" href="#0">{$rs.question}</a>
+				<div class="cd-faq-content">
+					<p>{$rs.answer|htmlspecialchars_decode}</p>
+				</div>
+			</li>
+			</volist>
+		</ul>
+		</volist>
+	</div> <!-- cd-faq-items -->
+	<a href="#0" class="cd-close-panel">Close</a>
+</section> <!-- cd-faq -->
+<script type='text/javascript' src='__PUBLIC__/js/jquery-2.1.1.min.js'></script>
+<script type='text/javascript' src='__PUBLIC__/js/faq/js/jquery.mobile.custom.min.js'></script>
+<script src="__PUBLIC__/js/faq/js/main.js"></script> <!-- Resource jQuery -->
+</body>
+</html>
